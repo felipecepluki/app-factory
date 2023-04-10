@@ -52,7 +52,7 @@
     <tr>
       <td>Finanças</td>
       <td>03/04/2023</td>
-      <td>In Development</td>
+      <td>10/04/2023</td>
     </tr>
   </tbody>
 </table>
