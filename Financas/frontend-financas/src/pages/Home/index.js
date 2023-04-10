@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Modal } from "react-native";
 import { AuthContext } from "../../contexts/auth";
 import Header from "../../components/Header";
 import { Background, ListBalance, Area, Title, List } from "./styles";
@@ -8,12 +8,14 @@ import { format } from "date-fns";
 import { useIsFocused } from "@react-navigation/native";
 import BalanceItem from "../../components/BalanceItem";
 import HistoryList from "../../components/HistoryList";
+import CalendarModal from "../../components/CalendarModal";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function Home() {
   const isFocused = useIsFocused();
   const [listBalance, setListBalance] = useState([]);
   const [movements, setMovements] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
   const [dateMovements, setDateMovements] = useState(new Date());
 
   useEffect(() => {
@@ -52,6 +54,10 @@ export default function Home() {
     }
   }
 
+  function filterDateMovements(dateselected) {
+    setDateMovements(dateselected);
+  }
+
   return (
     <Background>
       <Header title="Minhas movimentações" />
@@ -63,7 +69,7 @@ export default function Home() {
         renderItem={({ item }) => <BalanceItem data={item} />}
       />
       <Area>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           <MaterialIcons name="event" color="#121212" size={30} />
         </TouchableOpacity>
         <Title>Ultimas movimentações</Title>
@@ -77,6 +83,12 @@ export default function Home() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       />
+      <Modal visible={modalVisible} animationType="fade" transparent={true}>
+        <CalendarModal
+          setVisible={() => setModalVisible(false)}
+          handleFilter={filterDateMovements}
+        />
+      </Modal>
     </Background>
   );
 }
