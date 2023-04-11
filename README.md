@@ -54,6 +54,12 @@
       <td>03/04/2023</td>
       <td>10/04/2023</td>
     </tr>
+    <tr>
+      <td>
+      Challenge</td>
+      <td>11/04/2023</td>
+      <td>11/04/2023</td>
+    </tr>
   </tbody>
 </table>
 
