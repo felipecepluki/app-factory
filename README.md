@@ -60,6 +60,12 @@
       <td>11/04/2023</td>
       <td>11/04/2023</td>
     </tr>
+    <tr>
+      <td>
+      Devpost</td>
+      <td>14/04/2023</td>
+      <td>In development</td>
+    </tr>
   </tbody>
 </table>
 
