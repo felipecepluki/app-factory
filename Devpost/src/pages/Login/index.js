@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Text} from 'react-native';
 import {
   Container,
@@ -9,12 +9,14 @@ import {
   SignUpButton,
   SignUpText,
 } from './styles';
+import {AuthContext} from '../../contexts/auth';
 
 function Login() {
   const [login, setLogin] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {signUp} = useContext(AuthContext);
 
   function toggleLogin() {
     setLogin(!login);
@@ -31,12 +33,12 @@ function Login() {
     // Fazer o login do user
   }
 
-  function handleSignUp() {
+  async function handleSignUp() {
     if (name === '' || email === '' || password === '') {
       console.log('Preencha todos os campos!');
       return;
     }
-    // Cadastrar o usuario na aplicacao
+    await signUp(email, password, name);
   }
 
   if (login) {
