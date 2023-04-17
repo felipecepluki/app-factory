@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {Text} from 'react-native';
+import {ActivityIndicator, Text} from 'react-native';
 import {
   Container,
   Title,
@@ -16,7 +16,7 @@ function Login() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {signUp} = useContext(AuthContext);
+  const {signUp, signIn, loadingAuth} = useContext(AuthContext);
 
   function toggleLogin() {
     setLogin(!login);
@@ -25,12 +25,12 @@ function Login() {
     setPassword('');
   }
 
-  function handleSignIn() {
+  async function handleSignIn() {
     if (email === '' || password === '') {
       console.log('Preencha todos os campos!');
       return;
     }
-    // Fazer o login do user
+    await signIn(email, password);
   }
 
   async function handleSignUp() {
@@ -57,7 +57,11 @@ function Login() {
         onChangeText={text => setPassword(text)}
       />
       <Button onPress={handleSignIn}>
-        <ButtonText>Acessar</ButtonText>
+        {loadingAuth ? (
+          <ActivityIndicator size={20} color="#FFF" />
+        ) : (
+          <ButtonText>Acessar</ButtonText>
+        )}
       </Button>
       <SignUpButton onPress={toggleLogin}>
         <SignUpText>Criar uma conta</SignUpText>
@@ -86,7 +90,11 @@ function Login() {
         onChangeText={text => setPassword(text)}
       />
       <Button onPress={handleSignUp}>
-        <ButtonText>Cadastrar</ButtonText>
+        {loadingAuth ? (
+          <ActivityIndicator size={20} color="#FFF" />
+        ) : (
+          <ButtonText>Cadastrar</ButtonText>
+        )}
       </Button>
       <SignUpButton onPress={toggleLogin}>
         <SignUpText>Já tenho uma conta</SignUpText>
