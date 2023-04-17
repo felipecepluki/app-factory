@@ -1,22 +1,59 @@
-import React, {useState} from 'react';
-import {Text} from 'react-native';
+import React, {useState, useContext, useCallback} from 'react';
+import {Text, ActivityIndicator, View} from 'react-native';
 import {Container, ButtonPost, ListPosts} from './styles';
 import Feather from 'react-native-vector-icons/Feather';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Header from '../../components/Header';
+import {AuthContext} from '../../contexts/auth';
+import firestore from '@react-native-firebase/firestore';
 
 function Home() {
   const navigation = useNavigation();
-  const [posts, setPosts] = useState([
-    {id: '1', content: 'TESTE123'},
-    {id: '2', content: 'Segundo'},
-    {id: '3', content: 'Terceiro'},
-  ]);
+  const {user} = useContext(AuthContext);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
+      function fetchPosts() {
+        firestore()
+          .collection('posts')
+          .orderBy('created', 'desc')
+          .limit(5)
+          .get()
+          .then(snapshot => {
+            if (isActive) {
+              setPosts([]);
+              const postList = [];
+              snapshot.docs.map(u => {
+                postList.push({
+                  ...u.data(),
+                  id: u.id,
+                });
+              });
+              setPosts(postList);
+              setLoading(false);
+            }
+          });
+      }
+      fetchPosts();
+      return () => {
+        isActive(false);
+      };
+    }, []),
+  );
 
   return (
     <Container>
       <Header />
-      <ListPosts data={posts} renderItem={({item}) => <Text>Teste</Text>} />
+      {loading ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size={50} color="E52246" />
+        </View>
+      ) : (
+        <ListPosts data={posts} renderItem={({item}) => <Text>Teste</Text>} />
+      )}
       <ButtonPost
         activeOpacity={0.8}
         onPress={() => navigation.navigate('NewPost')}>
