@@ -1,15 +1,19 @@
-import React, {useLayoutEffect, useState, useCallback} from 'react';
-import {View, Text} from 'react-native';
+import React, {useLayoutEffect, useState, useCallback, useContext} from 'react';
+import {ActivityIndicator, View} from 'react-native';
 import {
   useRoute,
   useNavigation,
   useFocusEffect,
 } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+import PostList from '../../components/PostList';
+import {Container, ListPosts} from './styles';
+import {AuthContext} from '../../contexts/auth';
 
 function PostsUser() {
   const route = useRoute();
   const navigation = useNavigation();
+  const {user} = useContext(AuthContext);
   const [title, setTitle] = useState(route.params?.title);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +40,6 @@ function PostsUser() {
           });
           if (isActive) {
             setPosts(postList);
-            console.log(postList);
             setLoading(false);
           }
         });
@@ -47,9 +50,19 @@ function PostsUser() {
   );
 
   return (
-    <View>
-      <Text>{route.params?.title}</Text>
-    </View>
+    <Container>
+      {loading ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size={50} color="#E52246" />
+        </View>
+      ) : (
+        <ListPosts
+          showsVerticalScrollIndicator={false}
+          data={posts}
+          renderItem={({item}) => <PostList data={item} userId={user.uid} />}
+        />
+      )}
+    </Container>
   );
 }
 
