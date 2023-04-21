@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {Container, AreaInput, Input} from './styles';
+import {Container, AreaInput, Input, List} from './styles';
 import Feather from 'react-native-vector-icons/Feather';
 import firestore from '@react-native-firebase/firestore';
+import SearchList from '../../components/SearchList';
 
 function Search() {
   const [input, setInput] = useState('');
@@ -40,6 +41,7 @@ function Search() {
           placeholderTextColor="#353840"
         />
       </AreaInput>
+      <List data={users} renderItem={({item}) => <SearchList data={item} />} />
     </Container>
   );
 }
