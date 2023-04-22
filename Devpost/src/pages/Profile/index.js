@@ -17,6 +17,7 @@ import {
 } from './styles';
 import Feather from 'react-native-vector-icons/Feather';
 import firestore from '@react-native-firebase/firestore';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 function Profile() {
   const {signOut, user, setUser, storageUser} = useContext(AuthContext);
@@ -54,16 +55,32 @@ function Profile() {
     setOpen(false);
   }
 
+  const uploadFile = () => {
+    const options = {
+      noData: true,
+      mediaType: 'photo',
+    };
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('Cancelou!');
+      } else if (response.error) {
+        console.log('Ops, parece que ocorreu algum erro!');
+      } else {
+        console.log('Enviar pro Firebase');
+      }
+    });
+  };
+
   return (
     <Container>
       <Header />
       {url ? (
-        <UploadButton onPress={() => alert('CLICOU')}>
+        <UploadButton onPress={() => uploadFile()}>
           <UploadText>+</UploadText>
           <Avatar source={{uri: url}} />
         </UploadButton>
       ) : (
-        <UploadButton onPress={() => alert('CLICOU')}>
+        <UploadButton onPress={() => uploadFile()}>
           <UploadText>+</UploadText>
         </UploadButton>
       )}
