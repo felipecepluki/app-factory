@@ -16,9 +16,10 @@ import {
   Input,
 } from './styles';
 import Feather from 'react-native-vector-icons/Feather';
+import firestore from '@react-native-firebase/firestore';
 
 function Profile() {
-  const {signOut, user} = useContext(AuthContext);
+  const {signOut, user, setUser, storageUser} = useContext(AuthContext);
   const [nome, setNome] = useState(user?.nome);
   const [url, setUrl] = useState(null);
   const [open, setOpen] = useState(false);
@@ -28,7 +29,29 @@ function Profile() {
   }
 
   async function updateProfile() {
-    alert('TESTE');
+    if (nome === '') {
+      return;
+    }
+    await firestore().collection('users').doc(user?.uid).update({
+      nome: nome,
+    });
+    const postDocs = await firestore()
+      .collection('posts')
+      .where('userId', '==', user?.uid)
+      .get();
+    postDocs.forEach(async doc => {
+      await firestore().collection('posts').doc(doc.id).update({
+        autor: nome,
+      });
+    });
+    let data = {
+      uid: user.uid,
+      nome: nome,
+      email: user.email,
+    };
+    setUser(data);
+    storageUser(data);
+    setOpen(false);
   }
 
   return (
