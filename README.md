@@ -64,7 +64,7 @@
       <td>
       Devpost</td>
       <td>14/04/2023</td>
-      <td>In development</td>
+      <td>23/04/2023</td>
     </tr>
   </tbody>
 </table>

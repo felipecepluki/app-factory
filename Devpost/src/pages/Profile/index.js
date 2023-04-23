@@ -18,7 +18,6 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-import storage from '@react-native-firebase/storage';
 import {launchImageLibrary} from 'react-native-image-picker';
 
 function Profile() {
@@ -28,18 +27,23 @@ function Profile() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    let isActive = true;
+
     async function loadAvatar() {
       try {
-        let response = await storage()
-          .ref('users')
-          .child(user?.uid)
-          .getDownloadURL();
-        setUrl(response);
+        if (isActive) {
+          let response = await storage()
+            .ref('users')
+            .child(user?.uid)
+            .getDownloadURL();
+          setUrl(response);
+        }
       } catch (err) {
         console.log('Não encontramos nenhuma foto');
       }
     }
-    return () => loadAvatar();
+    loadAvatar();
+    return () => (isActive = false);
   }, []);
 
   async function handleSignOut() {
