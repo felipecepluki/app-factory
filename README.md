@@ -55,16 +55,19 @@
       <td>10/04/2023</td>
     </tr>
     <tr>
-      <td>
-      Challenge</td>
+      <td>Challenge</td>
       <td>11/04/2023</td>
       <td>11/04/2023</td>
     </tr>
     <tr>
-      <td>
-      Devpost</td>
+      <td>Devpost</td>
       <td>14/04/2023</td>
       <td>23/04/2023</td>
+    </tr>
+    <tr>
+      <td>HeyGrupos</td>
+      <td>23/04/2023</td>
+      <td>In Development</td>
     </tr>
   </tbody>
 </table>
