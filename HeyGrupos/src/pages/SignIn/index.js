@@ -7,12 +7,54 @@ import {
   SafeAreaView,
   Platform,
 } from 'react-native/types';
+import auth from '@react-native-firebase/auth';
+import {useNavigation} from '@react-navigation/native';
 
 export default function SignIn() {
+  const navigation = useNavigation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [type, setType] = useState(false);
+
+  function handleLogin() {
+    if (type) {
+      if (name === '' || email === '' || password === '') {
+        return;
+      }
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(user => {
+          user.user
+            .updateProfile({
+              displayName: name,
+            })
+            .then(() => {
+              navigation.goBack();
+            });
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('E-mail já em uso!');
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            console.log('E-mail inválido!');
+          }
+        });
+    } else {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          navigation.goBack();
+        })
+        .catch(error => {
+          if (error.code === 'auth/invalid-email') {
+            console.log('E-mail inválido!');
+          }
+        });
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,12 +82,14 @@ export default function SignIn() {
         onChangeText={text => setPassword(text)}
         placeholder="Sua senha"
         placeholderTextColor="#99999b"
+        secureTextEntry={true}
       />
       <TouchableOpacity
         style={[
           styles.buttonLogin,
           {backgroundColor: type ? '#f53745' : '#57dd86'},
-        ]}>
+        ]}
+        onPress={handleLogin}>
         <Text style={styles.buttonText}>{type ? 'Cadastrar' : 'Acessar'}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => setType(!type)}>
