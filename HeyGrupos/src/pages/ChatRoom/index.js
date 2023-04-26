@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,19 +8,28 @@ import {
   Modal,
 } from 'react-native/types';
 import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FabButton from '../../components/FabButton';
 import ModalNewRoom from '../../components/ModalNewRoom';
 
 export default function ChatRoom() {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  const [user, setUser] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    const hasUser = auth().currentUser ? auth().currentUser.toJSON() : null;
+    console.log(hasUser);
+    setUser(hasUser);
+  }, [isFocused]);
 
   function handleSignOut() {
     auth()
       .signOut()
       .then(() => {
+        setUser(null);
         navigation.navigate('SignIn');
       })
       .catch(() => {
@@ -32,16 +41,18 @@ export default function ChatRoom() {
     <SafeAreaView style={styles.container}>
       <View style={styles.headerRoom}>
         <View style={styles.headerRoomLeft}>
-          <TouchableOpacity onPress={handleSignOut}>
-            <MaterialIcons name="arrow-back" size={28} color="#fff" />
-          </TouchableOpacity>
+          {user && (
+            <TouchableOpacity onPress={handleSignOut}>
+              <MaterialIcons name="arrow-back" size={28} color="#fff" />
+            </TouchableOpacity>
+          )}
           <Text style={styles.title}>Grupos</Text>
         </View>
         <TouchableOpacity>
           <MaterialIcons name="search" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
-      <FabButton setVisible={() => setModalVisible(true)} />
+      <FabButton setVisible={() => setModalVisible(true)} userStatus={user} />
       <Modal visible={modalVisible} animationType="fade" transparent={true}>
         <ModalNewRoom setVisible={() => setModalVisible(false)} />
       </Modal>
