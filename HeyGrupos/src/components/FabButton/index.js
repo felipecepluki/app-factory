@@ -1,12 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 
-function FabButton({setVisible, userStatus}) {
-  const navigation = useNavigation();
-
+function FabButton({setVisible}) {
   function handleNavigateButton() {
-    userStatus ? setVisible() : navigation.navigate('SignIn');
+    setVisible();
   }
 
   return (
