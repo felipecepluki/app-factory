@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,16 +6,57 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Modal,
+  ActivityIndicator,
 } from 'react-native/types';
 import auth from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FabButton from '../../components/FabButton';
 import ModalNewRoom from '../../components/ModalNewRoom';
 
 export default function ChatRoom() {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [modalVisible, setModalVisible] = useState(false);
+  const [user, setUser] = useState(null);
+  const [threads, setThreads] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const hasUser = auth().currentUser ? auth().currentUser.toJSON() : null;
+    console.log(hasUser);
+    setUser(hasUser);
+  }, [isFocused]);
+
+  useEffect(() => {
+    let isActive = true;
+    function getChats() {
+      firestore()
+        .collection('MESSAGE_THREADS')
+        .orderBy('lastMessage.createdAt', 'desc')
+        .limit(10)
+        .get()
+        .then(snapshot => {
+          const threads = snapshot.docs.map(documentSnapshot => {
+            return {
+              _id: documentSnapshot.id,
+              name: '',
+              lastMessage: {text: ''},
+              ...documentSnapshot.data(),
+            };
+          });
+          if (isActive) {
+            setThreads(threads);
+            setLoading(false);
+          }
+        });
+    }
+    getChats();
+    return () => {
+      isActive = false;
+    };
+  }, [isFocused]);
 
   function handleSignOut() {
     auth()
@@ -26,6 +67,10 @@ export default function ChatRoom() {
       .catch(() => {
         console.log('Não possui nenhum usuário');
       });
+  }
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#555" />;
   }
 
   return (
