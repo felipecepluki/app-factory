@@ -7,13 +7,15 @@ import {
   TouchableOpacity,
   Modal,
   ActivityIndicator,
-} from 'react-native/types';
+  FlatList,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FabButton from '../../components/FabButton';
 import ModalNewRoom from '../../components/ModalNewRoom';
+import ChatList from '../../components/ChatList';
 
 export default function ChatRoom() {
   const navigation = useNavigation();
@@ -86,6 +88,14 @@ export default function ChatRoom() {
           <MaterialIcons name="search" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
+      <FlatList
+        data={threads}
+        keyExtractor={item => item.id}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}) => {
+          <ChatList />;
+        }}
+      />
       <FabButton setVisible={() => setModalVisible(true)} />
       <Modal visible={modalVisible} animationType="fade" transparent={true}>
         <ModalNewRoom setVisible={() => setModalVisible(false)} />
@@ -97,6 +107,7 @@ export default function ChatRoom() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   headerRoom: {
     flexDirection: 'row',
