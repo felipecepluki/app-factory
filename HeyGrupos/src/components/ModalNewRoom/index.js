@@ -10,7 +10,7 @@ import {
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-function ModalNewRoom({setVisible}) {
+function ModalNewRoom({setVisible, setUpdateScreen}) {
   const [roomName, setRoomName] = useState('');
   const user = auth().currentUser.toJSON();
 
@@ -42,6 +42,7 @@ function ModalNewRoom({setVisible}) {
           })
           .then(() => {
             setVisible();
+            setUpdateScreen();
           });
       })
       .catch(err => {
