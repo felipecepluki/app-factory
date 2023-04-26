@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "commit": "commit"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.1",
+    "@commitlint/config-conventional": "^17.6.1"
+  }
+}
