@@ -120,10 +120,11 @@ export default function ChatRoom() {
           <ChatList
             data={item}
             deleteRoom={() => deleteRoom(item.owner, item._id)}
+            userStatus={user}
           />;
         }}
       />
-      <FabButton setVisible={() => setModalVisible(true)} />
+      <FabButton setVisible={() => setModalVisible(true)} userStatus={user} />
       <Modal visible={modalVisible} animationType="fade" transparent={true}>
         <ModalNewRoom
           setVisible={() => setModalVisible(false)}
