@@ -1,0 +1,169 @@
+{
+  "main": {
+    "id": "875ba39b636bf5ac",
+    "type": "split",
+    "children": [
+      {
+        "id": "abfb31a330fcb3d5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2bf8082a31f3684a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "3. Como monetizar meu App ?.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d5ebe16633eb2ea8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "4. Modelos para monetizar seu App.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e1514a0a3161e88a",
+    "type": "split",
+    "children": [
+      {
+        "id": "e3c8426004f59663",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2aea4e71b68389cd",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "f967ec6abe63ef92",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "94bb05885d4e69a1",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ee2122d8ff87f4ce",
+    "type": "split",
+    "children": [
+      {
+        "id": "1e8800004405a94c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "968012a670acdfb2",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "4. Modelos para monetizar seu App.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "0a47638774abcb4e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "4. Modelos para monetizar seu App.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d6ee17b8e64e6ebc",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "ba9394efb9e4f7d7",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "4. Modelos para monetizar seu App.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "d5ebe16633eb2ea8",
+  "lastOpenFiles": [
+    "3. Como monetizar meu App ?.md",
+    "4. Modelos para monetizar seu App.md",
+    "1. Transformando as ideias em Produtos.md",
+    "2. Como posso aplicar prototipação ?.md"
+  ]
+}
