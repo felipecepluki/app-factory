@@ -1,31 +1,27 @@
 {
   "main": {
-    "id": "875ba39b636bf5ac",
+    "id": "3aeddef43b389061",
     "type": "split",
     "children": [
       {
-        "id": "abfb31a330fcb3d5",
+        "id": "2d0dadecaf166b61",
         "type": "tabs",
         "children": [
           {
-            "id": "2bf8082a31f3684a",
+            "id": "bc5cde8eff0aeb7a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "3. Como monetizar meu App ?.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           },
           {
-            "id": "d5ebe16633eb2ea8",
+            "id": "45717937ff85f9bf",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "4. Modelos para monetizar seu App.md",
+                "file": "4. Publicando Aplicativo.md",
                 "mode": "source",
                 "source": false
               }
@@ -38,15 +34,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "e1514a0a3161e88a",
+    "id": "6ac1644335281984",
     "type": "split",
     "children": [
       {
-        "id": "e3c8426004f59663",
+        "id": "40018a8ddb8513b2",
         "type": "tabs",
         "children": [
           {
-            "id": "2aea4e71b68389cd",
+            "id": "6df876bb00aa3c52",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -56,7 +52,7 @@
             }
           },
           {
-            "id": "f967ec6abe63ef92",
+            "id": "6951cb75ea907eb6",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -71,15 +67,7 @@
             }
           },
           {
-            "id": "94bb05885d4e69a1",
-            "type": "leaf",
-            "state": {
-              "type": "starred",
-              "state": {}
-            }
-          },
-          {
-            "id": "4bcd1563bf03e868",
+            "id": "b87901924f92c4a9",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -93,20 +81,20 @@
     "width": 300
   },
   "right": {
-    "id": "ee2122d8ff87f4ce",
+    "id": "157957bdcde71ec0",
     "type": "split",
     "children": [
       {
-        "id": "1e8800004405a94c",
+        "id": "2c5747ad54b89236",
         "type": "tabs",
         "children": [
           {
-            "id": "968012a670acdfb2",
+            "id": "944b21fd90e6f03d",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "4. Modelos para monetizar seu App.md",
+                "file": "4. Publicando Aplicativo.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,19 +106,19 @@
             }
           },
           {
-            "id": "0a47638774abcb4e",
+            "id": "c4e6507f8554f4fa",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "4. Modelos para monetizar seu App.md",
+                "file": "4. Publicando Aplicativo.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "d6ee17b8e64e6ebc",
+            "id": "1d00f88a7fd597f6",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -141,12 +129,12 @@
             }
           },
           {
-            "id": "ba9394efb9e4f7d7",
+            "id": "19c870c59e0a03fd",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "4. Modelos para monetizar seu App.md"
+                "file": "4. Publicando Aplicativo.md"
               }
             }
           }
@@ -167,11 +155,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d5ebe16633eb2ea8",
+  "active": "45717937ff85f9bf",
   "lastOpenFiles": [
-    "3. Como monetizar meu App ?.md",
-    "4. Modelos para monetizar seu App.md",
-    "1. Transformando as ideias em Produtos.md",
-    "2. Como posso aplicar prototipação ?.md"
+    "4. Publicando Aplicativo.md",
+    "3. Preparando chave keystore para publicar.md",
+    "2. Gerando o APK.md",
+    "1. Gerando Icon.md"
   ]
 }
