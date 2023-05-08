@@ -88,6 +88,18 @@ export default function App() {
     Keyboard.dismiss();
   }
 
+  async function excluirBook(data) {
+    const realm = await getRealm();
+    const ID = data.id;
+    realm.write(() => {
+      if (realm.objects('Book').filtered('id =' + ID).length > 0) {
+        realm.delete(realm.objects('Book').filtered('id =' + ID));
+      }
+    });
+    const livrosAtuais = await realm.objects('Books').sorted('id', false);
+    setBooks(livrosAtuais);
+  }
+
   return (
     <View className="flex-1 bg-[#373737] pt-[45px]">
       <Text className="text-[35px] text-center text-white font-bold">
@@ -128,7 +140,9 @@ export default function App() {
         keyboardShouldPersistTaps="handled"
         data={books}
         keyExtractor={item => String(item.id)}
-        renderItem={({item}) => <Books data={item} editar={editarBook} />}
+        renderItem={({item}) => (
+          <Books data={item} editar={editarBook} excluir={excluirBook} />
+        )}
         className="px-5 mt-5"
       />
     </View>

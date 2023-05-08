@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 
-export default function Books({data, editar}) {
+export default function Books({data, editar, excluir}) {
   return (
     <View className="p-5 rounded-[5px] bg-white mb-[15px]">
       <Text className="text-xl font-bold text-black">{data.nome}</Text>
@@ -13,7 +13,7 @@ export default function Books({data, editar}) {
           <Text className="text-black text-base">Editar</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => excluir(data)}
           className="bg-[#dd] p-[5px] mr-[15px] rounded-[5px]">
           <Text className="text-black text-base">Excluir</Text>
         </TouchableOpacity>
