@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Keyboard,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import getRealm from './services/realm';
 import Books from './Books';
 
 export default function App() {
@@ -7,8 +15,45 @@ export default function App() {
   const [preco, setPreco] = useState('');
   const [books, setBooks] = useState('');
 
-  function addBook() {
-    alert('CLICOU');
+  useEffect(() => {
+    async function loadBooks() {
+      const realm = await getRealm();
+      const data = realm.objects('Book');
+      setBooks(data);
+    }
+    loadBooks();
+  }, []);
+
+  async function saveBook(data) {
+    const realm = await getRealm();
+    const id =
+      realm.objects('Book').sorted('id', true).length > 0
+        ? realm.objects('Book').sorted('id', true)[0].id + 1
+        : 1;
+    const dadosLivro = {
+      id: id,
+      nome: data.nome,
+      preco: data.preco,
+    };
+    realm.write(() => {
+      realm.create('Book', dadosLivro);
+    });
+  }
+
+  async function addBook() {
+    if (nome === '' || preco === '') {
+      alert('Preencha todos os campos!');
+      return;
+    }
+    try {
+      const data = {nome: nome, preco: preco};
+      await saveBook(data);
+      setNome('');
+      setPreco('');
+      Keyboard.dismiss();
+    } catch (err) {
+      alert(err);
+    }
   }
 
   return (
