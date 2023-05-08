@@ -14,6 +14,8 @@ export default function App() {
   const [nome, setNome] = useState('');
   const [preco, setPreco] = useState('');
   const [books, setBooks] = useState('');
+  const [idEdit, setIdEdit] = useState(null);
+  const [disabledBtn, setDisabledBtn] = useState(false);
 
   useEffect(() => {
     async function loadBooks() {
@@ -56,6 +58,36 @@ export default function App() {
     }
   }
 
+  function editarBook(data) {
+    setNome(data.nome);
+    setPreco(data.preco);
+    setIdEdit(data.id);
+    setDisabledBtn(true);
+  }
+
+  async function editBook() {
+    if (idEdit === null) {
+      alert('Você não pode editar');
+      return;
+    }
+    const realm = await getRealm();
+    const response = {
+      id: idEdit,
+      nome: nome,
+      preco: preco,
+    };
+    await realm.write(() => {
+      realm.create('Book', response, 'modified');
+    });
+    const dadosAlterados = await realm.objects('Book').sorted('id', false);
+    setBooks(dadosAlterados);
+    setNome('');
+    setPreco('');
+    setIdEdit(null);
+    setDisabledBtn(false);
+    Keyboard.dismiss();
+  }
+
   return (
     <View className="flex-1 bg-[#373737] pt-[45px]">
       <Text className="text-[35px] text-center text-white font-bold">
@@ -80,11 +112,13 @@ export default function App() {
       <View className="items-center flex-row justify-around">
         <TouchableOpacity
           onPress={addBook}
+          disabled={disabledBtn}
+          style={{opacity: disabledBtn ? 0.1 : 1}}
           className="bg-white h-10 rounded-[5px] p-[5px]">
           <Text className="text-[17px] text-center">Cadastrar</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={editBook}
           className="bg-white h-10 rounded-[5px] p-[5px]">
           <Text className="text-[17px] text-center">Editar</Text>
         </TouchableOpacity>
@@ -94,7 +128,7 @@ export default function App() {
         keyboardShouldPersistTaps="handled"
         data={books}
         keyExtractor={item => String(item.id)}
-        renderItem={({item}) => <Books data={item} />}
+        renderItem={({item}) => <Books data={item} editar={editarBook} />}
         className="px-5 mt-5"
       />
     </View>
