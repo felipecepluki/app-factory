@@ -1,54 +1,51 @@
 import React, { Component } from "react";
+import "./estilo.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nome: "",
-      email: "",
-      senha: "",
+      textoFrase: "",
     };
-    this.cadastrar = this.cadastrar.bind(this);
+    this.quebraBiscoito = this.quebraBiscoito.bind(this);
+    this.frases = [
+      "Siga os bons e aprenda com eles.",
+      "O bom-senso vale mais do que muito conhecimento.",
+      "O riso é a menor distância entre duas pessoas.",
+      "Deixe de lado as preocupações e seja feliz.",
+      "Realize o óbvio, pense no improvável e conquiste o impossível.",
+      "Acredite em milagres, mas não dependa deles.",
+      "A maior barreira para o sucesso é o medo do fracasso.",
+    ];
   }
 
-  cadastrar(event) {
-    const { nome, email, senha } = this.state;
-    if (nome !== "" && email !== "" && senha !== "") {
-      alert(`Nome: ${nome} \n Email: ${email} \n senha: ${senha}`);
-    } else {
-      this.setState({ error: "Ops! Parece que esta faltando algo" });
-    }
-    event.preventDefault();
+  quebraBiscoito() {
+    let state = this.state;
+    let numeroAleatorio = Math.floor(Math.random() * this.frases.length);
+    state.textoFrase = '" ' + this.frases[numeroAleatorio] + ' "';
+    this.setState(state);
   }
 
   render() {
     return (
+      <div className="container">
+        <img
+          src={require("./assets/biscoito.png")}
+          alt="Biscoito da Sorte"
+          className="img"
+        />
+        <Botao nome="Abrir biscoito" acaoBtn={this.quebraBiscoito} />
+        <h3 className="textoFrase">{this.state.textoFrase}</h3>
+      </div>
+    );
+  }
+}
+
+class Botao extends Component {
+  render() {
+    return (
       <div>
-        <h1>Novo usuario</h1>
-        {this.state.error && <p>{this.state.error}</p>}
-        <form onSubmit={this.cadastrar}>
-          <label>Nome:</label>
-          <input
-            type="text"
-            value={this.state.nome}
-            onChange={(e) => this.setState({ nome: e.target.value })}
-          />
-          <br />
-          <label>Email:</label>
-          <input
-            type="text"
-            value={this.state.nome}
-            onChange={(e) => this.setState({ email: e.target.value })}
-          />
-          <br />
-          <label>Senha:</label>
-          <input
-            type="email"
-            value={this.state.email}
-            onChange={(e) => this.setState({ email: e.target.value })}
-          />
-          <button type="submit">Cadastrar</button>
-        </form>
+        <button onClick={this.props.acaoBtn}>{this.props.nome}</button>
       </div>
     );
   }
