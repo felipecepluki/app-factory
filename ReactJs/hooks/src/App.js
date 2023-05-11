@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 function App() {
   const [tarefas, setTarefas] = useState([]);
@@ -19,6 +19,8 @@ function App() {
     setTarefas([...tarefas, input]);
   }
 
+  const totalTarefas = useMemo(() => tarefas.length, [tarefas]);
+
   return (
     <div className="">
       <ul>
@@ -26,6 +28,8 @@ function App() {
           <li key={tarefa}>{tarefa}</li>
         ))}
       </ul>
+      <br />
+      <strong>Você tem {totalTarefas} tarefas!</strong>
       <input
         type="text"
         value={input}
