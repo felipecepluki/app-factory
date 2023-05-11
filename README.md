@@ -79,6 +79,16 @@
       <td>07/05/2023</td>
       <td>08/05/2023</td>
     </tr>
+    <tr>
+      <td>Fortune cookie</td>
+      <td>10/05/2023</td>
+      <td>10/05/2023</td>
+    </tr>
+    <tr>
+      <td>Stopwatch</td>
+      <td>11/05/2023</td>
+      <td>11/05/2023</td>
+    </tr>
   </tbody>
 </table>
 
@@ -93,7 +103,7 @@ Before starting, you will need to have the following tools installed on your mac
 #### Clone this repository
 
 ```bash
-git clone https://github.com/felipecepluki/app-factory.git
+gh repo clone felipecepluki/app-factory
 ```
 
 ### Access folder of the project
