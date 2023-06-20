@@ -94,6 +94,21 @@
       <td>11/05/2023</td>
       <td>11/05/2023</td>
     </tr>
+    <tr>
+      <td>Routes</td>
+      <td>12/05/2023</td>
+      <td>12/05/2023</td>
+    </tr>
+    <tr>
+      <td>Films</td>
+      <td>22/05/2023</td>
+      <td>15/06/2023</td>
+    </tr>
+    <tr>
+      <td>Firebase</td>
+      <td>15/06/2023</td>
+      <td>20/06/2023</td>
+    </tr>
   </tbody>
 </table>
 
