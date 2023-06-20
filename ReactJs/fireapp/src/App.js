@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { db, auth } from "./firebaseConnection";
 import { doc, setDoc, collection, addDoc, getDoc, getDocs, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import "./App.css";
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 
 function App() {
   const [titulo, setTitulo] = useState("");
@@ -10,6 +10,8 @@ function App() {
   const [idPost, setIdPost] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [user, setUser] = useState(false);
+  const [userDetail, setUserDetail] = useState({});
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -112,9 +114,43 @@ function App() {
     })
   }
 
+  async function logarUsuario() {
+    await signInWithEmailAndPassword(auth, email, senha)
+    .then((value) => {
+      console.log("USER LOGADO COM SUCESSO")
+      console.log(value)
+      setUserDetail({
+        uid: value.user.uid,
+        email: value.user.email,
+      })
+      setUser(true);
+      setEmail("")
+      setSenha("")
+    })
+    .catch(() => {
+      console.log("ERRO AO FAZER LOGIN")
+    })
+  }
+
+  async function fazerLogout() {
+    await signOut(auth);
+    setUser(false);
+    setUserDetail({});
+  }
+
   return (
     <div className="App">
       <h1>ReactJs + Firebase :)</h1>
+      {
+        user && (
+          <div>
+            <strong>SEja bem-vindo(a) (Você está logado!)</strong><br />
+            <span>ID: {userDetail.uid} - Email: {userDetail.email}</span><br />
+            <button onClick={fazerLogout}>Sair da conta</button>
+            <br /><br />
+          </div>
+        )
+      }
       <div className="container">
         <h2>Usuarios</h2>
         <label>E-mail</label>
@@ -132,6 +168,7 @@ function App() {
         />
         <br />
         <button onClick={novoUsuario}>Cadastrar</button>
+        <button onClick={logarUsuario}>Fazer login</button>
       </div>
       <br />
       <br />
