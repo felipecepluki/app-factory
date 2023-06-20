@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { db, auth } from "./firebaseConnection";
 import { doc, setDoc, collection, addDoc, getDoc, getDocs, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import "./App.css";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth"
 
 function App() {
   const [titulo, setTitulo] = useState("");
@@ -29,6 +29,26 @@ function App() {
       })
     }
     loadPosts();
+  }, [])
+
+  useEffect(() => {
+    async function checkLogin() {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          console.log(user)
+          setUser(true)
+          setUserDetail({
+            uid: user.uid,
+            email: user.email
+          })
+        }
+        else {
+          setUser(false)
+          setUserDetail({})
+        }
+      })
+    }
+    checkLogin();
   }, [])
 
   async function handleAdd() {
