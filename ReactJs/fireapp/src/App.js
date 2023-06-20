@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { db } from "./firebaseConnection";
+import { db, auth } from "./firebaseConnection";
 import { doc, setDoc, collection, addDoc, getDoc, getDocs, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import "./App.css";
+import { createUserWithEmailAndPassword } from "firebase/auth"
 
 function App() {
   const [titulo, setTitulo] = useState("");
   const [autor, setAutor] = useState("");
   const [idPost, setIdPost] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -90,10 +93,51 @@ function App() {
     })
   }
 
+  async function novoUsuario() {
+    await createUserWithEmailAndPassword(auth, email, senha)
+    .then((value) => {
+      console.log("CADASTRADO COM SUCESSO!")
+      console.log(value)
+      setEmail("")
+      setSenha("")
+    })
+    .catch((error) => {
+      console.log("ERROR AO CADASTRAR")
+      if (error.code === "auth/weak-password") {
+        alert("Senha muito fraca")
+      }
+      else if (error.code === "auth/email-already-in-use") {
+        alert("Email já existente!")
+      }
+    })
+  }
+
   return (
     <div className="App">
       <h1>ReactJs + Firebase :)</h1>
       <div className="container">
+        <h2>Usuarios</h2>
+        <label>E-mail</label>
+        <input 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Digite um e-mail"
+        />
+        <br />
+        <label>Senha</label>
+        <input 
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          placeholder="Digite sua senha"
+        />
+        <br />
+        <button onClick={novoUsuario}>Cadastrar</button>
+      </div>
+      <br />
+      <br />
+      <hr />
+      <div className="container">
+        <h2>POSTS</h2>
         <label>ID do Post:</label>
         <input 
           placeholder="Digite o ID do post"
