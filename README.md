@@ -107,7 +107,7 @@
     <tr>
       <td>Firebase</td>
       <td>15/06/2023</td>
-      <td></td>
+      <td>21/06/2023</td>
     </tr>
   </tbody>
 </table>
