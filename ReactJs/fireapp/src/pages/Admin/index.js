@@ -1,81 +1,104 @@
-import { useEffect, useState } from "react";
-import "./admin.css";
+import { useState, useEffect } from 'react'
+import './admin.css'
 import { auth, db } from '../../firebaseConnection'
-import { signOut } from "firebase/auth"
-import { addDoc, collection, onSnapshot, query, orderBy, where } from 'firebase/firestore'
+import { signOut } from 'firebase/auth'
+import { 
+  addDoc,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  where,
+  doc,
+  deleteDoc
+} from 'firebase/firestore'
 
-export function Admin() {
+export default function Admin(){
   const [tarefaInput, setTarefaInput] = useState('')
   const [user, setUser] = useState({})
-  const [tarefas, setTarefas] = useSTate([])
+
+  const [tarefas, setTarefas] = useState([]);
 
   useEffect(() => {
-    async function loadTarefas() {
+    async function loadTarefas(){
       const userDetail = localStorage.getItem("@detailUser")
       setUser(JSON.parse(userDetail))
-      if (userDetail) {
+
+      if(userDetail){
         const data = JSON.parse(userDetail);
+        
         const tarefaRef = collection(db, "tarefas")
         const q = query(tarefaRef, orderBy("created", "desc"), where("userUid", "==", data?.uid))
+
         const unsub = onSnapshot(q, (snapshot) => {
-          let lista = []
-          snapshot.forEach((doc) => {
+          let lista = [];
+
+          snapshot.forEach((doc)=> {
             lista.push({
               id: doc.id,
               tarefa: doc.data().tarefa,
               userUid: doc.data().userUid
             })
           })
-          setTarefas(lista)
+          setTarefas(lista);
         })
       }
     }
-    loadTarefas()
-  })
+    loadTarefas();
+  }, [])
 
-  async function handleRegister(e) {
-    e.preventDefault()
-    if (tarefaInput === '') {
+  async function handleRegister(e){
+    e.preventDefault();
+
+    if(tarefaInput === ''){
       alert("Digite sua tarefa...")
       return;
     }
+
     await addDoc(collection(db, "tarefas"), {
       tarefa: tarefaInput,
       created: new Date(),
-      userUid: user?.uid,
+      userUid: user?.uid
     })
     .then(() => {
-      console.log("Tarefa registrada com sucesso")
-      setTarefaInput("")
+      console.log("TAREFA REGISTRADA")
+      setTarefaInput('')
     })
     .catch((error) => {
-      console.log("Erro ao registrar" + error)
+      console.log("ERRO AO REGISTRAR " + error)
     })
   }
 
-  async function handleLogout() {
+  async function handleLogout(){
     await signOut(auth);
   }
 
-  return (
+  async function deleteTarefa(id){
+    const docRef = doc(db, "tarefas", id)
+    await deleteDoc(docRef)
+  }
+
+  return(
     <div className="admin-container">
       <h1>Minhas tarefas</h1>
-      <form onSubmit={handleRegister}>
-        <textarea 
-          placeholder="Digite sua tarefa..." 
-          value={tarefaInput} 
-          onChange={(e) => setTarefaInput(e.target.value)} 
+      <form className="form" onSubmit={handleRegister}>
+        <textarea
+          placeholder="Digite sua tarefa..."
+          value={tarefaInput}
+          onChange={(e) => setTarefaInput(e.target.value) }
         />
         <button className="btn-register" type="submit">Registrar tarefa</button>
       </form>
-      <article className="list">
-        <p>Estudar javascript e react</p>
+      {tarefas.map((item) => (
+      <article key={item.id} className="list">
+        <p>{item.tarefa}</p>
         <div>
           <button>Editar</button>
-          <button className="btn-delete">Concluir</button>
+          <button onClick={ () => deleteTarefa(item.id) } className="btn-delete">Concluir</button>
         </div>
-        <button className="btn-logout" onClick={handleLogout}>Sair</button>
       </article>
+      ))}
+      <button className="btn-logout" onClick={handleLogout}>Sair</button>
     </div>
   )
 }
